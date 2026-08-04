@@ -33,8 +33,35 @@ every `transcript-*.md` is ignored. For each published folder, the build serves 
 5. **Section breaks** use a horizontal rule (`---`) between movements; the build renders
    these as a centred `* * *` ornament. (The leading `---` right after the byline is
    optional and is dropped automatically.)
-6. **Closing attribution** — the standard "Dictated, then shaped." note as the final
-   paragraph. Not enforced, but every piece carries it.
+6. **Closing colophon** — the author bio and the "Dictated, then shaped." note, as the
+   final block. See *Colophon convention* below — the build renders this as a distinct
+   boxed section, so its format matters.
+
+## Colophon convention (the bio box)
+
+The material after the piece's **final `---`** is treated as the colophon and rendered in a
+separate boxed section at the end of the piece (Plus Jakarta Sans, upright, not italic) —
+visually distinct from the essay, so it clearly marks the end of the piece.
+
+For the build to recognise it, **every paragraph after the final `---` must be fully
+italicised** (wrapped in `*…*`), matching the attribution style. That is the signal. If the
+tail is *not* all-italic, the build assumes it's a normal section and the `---` renders as a
+`* * *` break instead. In practice:
+
+```
+…last line of the essay.
+
+---
+
+*Matt Erstling is the founder of Satsuma Ventures, a private family venture studio based in Seattle.*
+
+*Dictated, then shaped. Every Pith piece starts as a conversation …*
+```
+
+- The **first** colophon paragraph renders as the bio; the rest render as smaller notes.
+- Because the final `---` becomes the essay/colophon boundary, **`* * *` now only ever means
+  an interior section break** — never "the piece is over." Don't add a trailing `* * *` to
+  signal the end; the bio box does that.
 
 ## Numbering & versioning
 

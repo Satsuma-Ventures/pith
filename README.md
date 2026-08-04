@@ -39,6 +39,11 @@ The build **only** publishes files under `published/[NNN]-[slug]/` that match th
 and for each piece it publishes the **highest version** on file. Older versions are kept
 as history but are not served.
 
+**Site shape:** the root (`/`) is the **latest** piece; every piece also has its own
+permalink at `/[slug]/`; and `/archive/` lists all pieces, newest first. Cross-links and
+the archive always point at the `/[slug]/` permalink, so the root just mirrors whichever
+piece is newest.
+
 ## Deploying
 
 Every push to `main` triggers `.github/workflows/deploy.yml`, which runs the build and

@@ -29,7 +29,8 @@ const OUT = path.join(ROOT, 'dist');
 
 const SITE = {
   name: 'Pith',
-  tagline: 'Written opinion from Satsuma Ventures on AI, empowerment, and building well.',
+  // Fallback meta description only (not shown on the page). Pieces use their own dek.
+  tagline: 'Long-form opinion from Satsuma Ventures.',
   url: 'https://pith.satsumaventures.com',
 };
 
@@ -182,7 +183,7 @@ function buildResolver(pieces) {
 
 /* ── templating ──────────────────────────────────────────────────────── */
 
-function layout({ title, description, bodyClass, main }) {
+function layout({ title, description, bodyClass, main, canonical }) {
   const desc = escapeHtml(description || SITE.tagline);
   return `<!DOCTYPE html>
 <html lang="en">
@@ -195,19 +196,29 @@ function layout({ title, description, bodyClass, main }) {
   <meta property="og:title" content="${escapeHtml(title)}">
   <meta property="og:description" content="${desc}">
   <meta property="og:type" content="article">
-  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  ${canonical ? `<link rel="canonical" href="${canonical}">` : ''}
+  <link rel="icon" type="image/png" href="/assets/favicon/favicon-96x96.png" sizes="96x96">
+  <link rel="icon" type="image/svg+xml" href="/assets/favicon/favicon.svg">
+  <link rel="shortcut icon" href="/assets/favicon/favicon.ico">
+  <link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Pith">
+  <link rel="manifest" href="/assets/favicon/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Average&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body class="${bodyClass || ''}">
+  <div class="tree-bg" aria-hidden="true"></div>
   <header class="masthead">
-    <a class="masthead-brand" href="/">
-      <img class="masthead-mark" src="/assets/satsuma-logomark.svg" alt="" width="28" height="28">
-      <span class="masthead-name">Pith</span>
+    <div class="masthead-left">
+      <a class="masthead-name" href="/">Pith</a>
+      <a class="masthead-nav" href="/archive/">Archive</a>
+    </div>
+    <a class="masthead-brand" href="https://www.satsumaventures.com" aria-label="Satsuma Ventures">
+      <span class="masthead-brand-label">A publication of</span>
+      <img class="masthead-lockup" src="/assets/satsuma-lockup.svg" alt="Satsuma Ventures" width="132" height="44">
     </a>
-    <span class="masthead-by">Satsuma Ventures</span>
   </header>
   <main class="wrap">
 ${main}
@@ -222,7 +233,7 @@ ${main}
 </html>`;
 }
 
-function homePage(pieces) {
+function archivePage(pieces) {
   const items = pieces.map((p) => `
       <li class="entry">
         <a class="entry-link" href="${p.url}">
@@ -233,19 +244,21 @@ function homePage(pieces) {
         </a>
       </li>`).join('\n');
 
+  const empty = '<p class="archive-empty">No pieces published yet.</p>';
   const main = `
-    <section class="lede">
-      <p class="kicker">Pith</p>
-      <h1 class="lede-title">Opinion, made well.</h1>
-      <p class="lede-sub">${escapeHtml(SITE.tagline)}</p>
-    </section>
+    <p class="kicker">Archive</p>
     <ol class="entries">
-${items}
+${items || empty}
     </ol>`;
-  return layout({ title: 'Pith — Satsuma Ventures', description: SITE.tagline, bodyClass: 'home', main });
+  return layout({
+    title: 'Archive — Pith',
+    description: 'Every Pith piece, newest first.',
+    bodyClass: 'archive', main,
+    canonical: `${SITE.url}/archive/`,
+  });
 }
 
-function piecePage(p, pieces, renderBody) {
+function piecePage(p, pieces, renderBody, colophonHtml, { atRoot = false } = {}) {
   const idx = pieces.findIndex((x) => x.slug === p.slug);
   const newer = pieces[idx - 1]; // pieces are newest-first
   const older = pieces[idx + 1];
@@ -266,10 +279,17 @@ function piecePage(p, pieces, renderBody) {
       <div class="prose">
 ${renderBody}
       </div>
+${colophonHtml || ''}
     </article>
 ${nav}
-    <p class="piece-back"><a href="/">← All of Pith</a></p>`;
-  return layout({ title: `${p.title} — Pith-${p.num}`, description: p.dek || SITE.tagline, bodyClass: 'piece-page', main });
+    <p class="piece-back"><a href="/archive/">← The archive</a></p>`;
+  // The latest piece is served at both "/" and "/<slug>/"; canonical always points to the slug.
+  return layout({
+    title: atRoot ? `Pith — ${p.title}` : `${p.title} — Pith-${p.num}`,
+    description: p.dek || SITE.tagline,
+    bodyClass: 'piece-page', main,
+    canonical: `${SITE.url}${p.url}`,
+  });
 }
 
 /* ── write helpers ───────────────────────────────────────────────────── */
@@ -280,14 +300,14 @@ function writeFile(rel, content) {
   fs.mkdirSync(path.dirname(full), { recursive: true });
   fs.writeFileSync(full, content);
 }
-function copyInto(srcDir, destRel) {
+function copyTree(srcDir, destDir) {
   if (!fs.existsSync(srcDir)) return;
+  fs.mkdirSync(destDir, { recursive: true });
   for (const f of fs.readdirSync(srcDir)) {
     const s = path.join(srcDir, f);
-    if (fs.statSync(s).isFile()) {
-      fs.mkdirSync(path.join(OUT, destRel), { recursive: true });
-      fs.copyFileSync(s, path.join(OUT, destRel, f));
-    }
+    const d = path.join(destDir, f);
+    if (fs.statSync(s).isDirectory()) copyTree(s, d);
+    else fs.copyFileSync(s, d);
   }
 }
 
@@ -298,6 +318,44 @@ function firstParagraph(html) {
   if (!m) return '';
   const text = m[1].replace(/<[^>]+>/g, '').replace(/\s+/g, ' ').trim();
   return text.length > 200 ? text.slice(0, 197).trimEnd() + '…' : text;
+}
+
+/**
+ * Split the essay from its closing colophon (author bio + "Dictated, then shaped").
+ * Convention: the material after the FINAL horizontal rule is the colophon — but only
+ * when it reads like attribution (every paragraph fully italicised), so a normal section
+ * break that happens to be last is never mistaken for a colophon. This is what lets the
+ * final `---` stop rendering as a "* * *" ornament: the boxed colophon marks the piece end,
+ * and "* * *" now only ever means an interior section break.
+ */
+function splitColophon(md) {
+  const lines = md.replace(/\r\n/g, '\n').split('\n');
+  let idx = -1;
+  for (let i = 0; i < lines.length; i++) {
+    if (/^-{3,}\s*$/.test(lines[i].trim())) idx = i;
+  }
+  if (idx === -1) return { essay: md, colophon: '' };
+
+  const tail = lines.slice(idx + 1).join('\n').trim();
+  const paras = tail.split(/\n{2,}/).map((s) => s.trim()).filter(Boolean);
+  const looksLikeColophon = paras.length > 0 && paras.every((p) => /^\*[\s\S]*\*$/.test(p));
+  if (!looksLikeColophon) return { essay: md, colophon: '' };
+
+  return { essay: lines.slice(0, idx).join('\n').trim(), colophon: paras };
+}
+
+/** Render the colophon paragraphs into a boxed bio section (upright, no italics). */
+function colophonBox(paras) {
+  if (!paras || !paras.length) return '';
+  const items = paras.map((p, i) => {
+    const inner = marked.parseInline(p.replace(/^\*|\*$/g, '').trim());
+    const cls = i === 0 ? 'colophon-bio' : 'colophon-note';
+    return `        <p class="${cls}">${inner}</p>`;
+  }).join('\n');
+  return `
+      <aside class="colophon">
+${items}
+      </aside>`;
 }
 
 function main() {
@@ -315,25 +373,29 @@ function main() {
   rmrf(OUT);
   fs.mkdirSync(OUT, { recursive: true });
 
-  // render each piece, capture a dek from the first paragraph
+  // render each piece: essay prose + a boxed colophon; capture a dek from the first paragraph
   for (const p of pieces) {
-    const md = resolveLinks(p.body, p.slug);
-    const html = marked.parse(md);
+    const { essay, colophon } = splitColophon(p.body);
+    const html = marked.parse(resolveLinks(essay, p.slug));
     p.renderedBody = html;
+    p.colophonHtml = colophonBox(colophon);
     p.dek = firstParagraph(html);
   }
 
   for (const p of pieces) {
-    writeFile(path.join(p.slug, 'index.html'), piecePage(p, pieces, p.renderedBody));
+    writeFile(path.join(p.slug, 'index.html'), piecePage(p, pieces, p.renderedBody, p.colophonHtml));
   }
-  writeFile('index.html', homePage(pieces));
+  // The site root is the latest piece; the full list lives at /archive/.
+  if (pieces.length) {
+    const latest = pieces[0]; // newest first
+    writeFile('index.html', piecePage(latest, pieces, latest.renderedBody, latest.colophonHtml, { atRoot: true }));
+  } else {
+    writeFile('index.html', archivePage(pieces));
+  }
+  writeFile('archive/index.html', archivePage(pieces));
 
-  // static assets
-  copyInto(ASSETS_DIR, 'assets');
-  // ensure a favicon exists (fall back to the logomark)
-  const favi = path.join(OUT, 'assets', 'favicon.svg');
-  const mark = path.join(OUT, 'assets', 'satsuma-logomark.svg');
-  if (!fs.existsSync(favi) && fs.existsSync(mark)) fs.copyFileSync(mark, favi);
+  // static assets (recursive — includes assets/favicon/)
+  copyTree(ASSETS_DIR, path.join(OUT, 'assets'));
 
   // Pages needs the custom domain + no Jekyll processing
   if (fs.existsSync(path.join(ROOT, 'CNAME'))) {
