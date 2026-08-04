@@ -229,6 +229,27 @@ ${main}
       <span class="site-foot-note">Dictated, then shaped.</span>
     </div>
   </footer>
+  <script>
+    // Keep the tree glued to whichever is higher in the viewport: the page bottom or the
+    // footer's top edge — so it rides up on top of the footer instead of hiding behind it.
+    (function () {
+      var tree = document.querySelector('.tree-bg');
+      var footer = document.querySelector('.site-foot');
+      if (!tree || !footer) return;
+      var pending = false;
+      function update() {
+        pending = false;
+        var overlap = window.innerHeight - footer.getBoundingClientRect().top;
+        tree.style.bottom = (overlap > 0 ? overlap : 0) + 'px';
+      }
+      function schedule() {
+        if (!pending) { pending = true; requestAnimationFrame(update); }
+      }
+      update();
+      addEventListener('scroll', schedule, { passive: true });
+      addEventListener('resize', schedule);
+    })();
+  </script>
 </body>
 </html>`;
 }
