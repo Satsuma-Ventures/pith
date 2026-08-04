@@ -31,26 +31,38 @@ body {
   font-family: var(--font-ui);
   line-height: 1.75;
   min-height: 100vh;
+  min-height: 100dvh; /* fill the viewport even with mobile browser chrome */
   display: flex;
   flex-direction: column;
 }
 a { color: var(--grove); text-decoration: none; }
 a:hover { text-decoration: underline; text-underline-offset: 3px; }
 
-/* ── Faded tree, anchored bottom-right of the viewport ────────────────── */
+/* ── Faded tree — sticks to the viewport bottom while reading, then rests on
+      the footer at the end. Sticky (not fixed) so it lives in the scrollable
+      document and rides the browser's rubber-band overscroll with the page.
+      A zero-height slot placed just above the footer; the tree overflows upward
+      from it via ::before, so it never affects layout. ────────────────────── */
 .tree-bg {
-  position: fixed;
-  right: 0; bottom: 0;
+  position: sticky;
+  bottom: 0;
+  align-self: stretch;  /* full width, so the tree anchors to the viewport's right edge */
+  height: 0;            /* no layout impact — the visual overflows this slot */
   z-index: -1;
+  pointer-events: none;
+}
+.tree-bg::before {
+  content: "";
+  position: absolute;
+  right: 0; bottom: 0;
   width: min(46vw, 560px);
   aspect-ratio: 1600 / 1534;
   background: var(--grove);
   opacity: 0.09;
-  pointer-events: none;
   -webkit-mask: url(/assets/satsuma-tree-outline.svg) no-repeat right bottom / contain;
           mask: url(/assets/satsuma-tree-outline.svg) no-repeat right bottom / contain;
 }
-@media (max-width: 40rem) { .tree-bg { width: 62vw; } }
+@media (max-width: 40rem) { .tree-bg::before { width: 62vw; } }
 
 .wrap { width: 100%; max-width: 46rem; margin: 0 auto; padding: 0 var(--gutter); }
 
@@ -87,7 +99,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .masthead-lockup { display: block; height: 1.5rem; width: auto; }
 
 /* ── Archive ──────────────────────────────────────────────────────────── */
-.wrap { flex: 1 0 auto; }
+main.wrap { flex: 1 0 auto; } /* absorbs slack so the footer never floats mid-page */
 .kicker {
   font-size: 0.72rem; text-transform: uppercase; letter-spacing: var(--tracking-label);
   color: var(--satsuma); font-weight: 600; margin-bottom: 1rem;
@@ -107,7 +119,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; line-height: 1.2;
   margin: 0.5rem 0 0; transition: color var(--ease-out) 180ms;
 }
-.entry-dek { font-family: var(--font-read); margin-top: 0.6rem; color: var(--muted); }
+.entry-dek { font-family: var(--font-read); font-size: 1.18rem; line-height: 1.5; margin-top: 0.6rem; color: var(--muted); }
 .entry-meta {
   display: block; margin-top: 0.75rem;
   font-size: 0.72rem; text-transform: uppercase; letter-spacing: var(--tracking-label); color: var(--muted);
@@ -165,7 +177,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .colophon {
   max-width: var(--measure); margin: 3.25rem auto 0;
   font-family: var(--font-ui); font-style: normal;
-  background: var(--warm-bark); border: 1px solid var(--rule);
+  background: var(--warm-bark);
   border-radius: 10px; padding: 1.5rem 1.75rem;
 }
 .colophon p { font-style: normal; margin: 0; }
@@ -173,8 +185,8 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
 .colophon-bio { font-size: 0.95rem; line-height: 1.6; color: var(--deep-ink); }
 .colophon-note {
   margin-top: 0.85rem !important; padding-top: 0.85rem;
-  border-top: 1px solid var(--rule);
-  font-size: 0.82rem; line-height: 1.6; color: var(--muted);
+  border-top: 1px solid #CDC0AB; /* darker shade of the warm-bark box, not the green rule */
+  font-size: 0.82rem; line-height: 1.6; color: var(--deep-ink);
 }
 
 /* ── Piece nav + back ─────────────────────────────────────────────────── */
