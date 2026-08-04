@@ -6,13 +6,14 @@ empowerment, and building well. Lives at **https://pith.satsumaventures.com**.
 Pith is a markdown-first publication: you write pieces as markdown, and a small build
 step turns the **published** ones into a static site. Drafts and interview transcripts
 stay in the repo but are never published. See **[PUBLISHING.md](PUBLISHING.md)** for the
-standard every published piece must meet, and the methodology skill (`pith.md`, in the
-studio repo) for how pieces get written.
+standard every published piece must meet, and the methodology skill (**[pith.md](pith.md)**)
+for how pieces get written.
 
 ## Layout
 
 ```
 pith/
+  pith.md               ← the methodology skill (how pieces get written)
   build.js              ← the generator (reads published/, writes dist/)
   content-bank.md       ← surplus insights + the Published Index (source of truth for numbers/dates)
   PUBLISHING.md         ← the publish standard + [[wiki-link]] reference
