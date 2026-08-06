@@ -15,7 +15,7 @@
 
   --font-display: 'Libre Baskerville', Georgia, 'Times New Roman', serif;   /* nameplate + titles */
   --font-ui:      'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* labels, nav, bio */
-  --font-read:    'Average', Georgia, 'Times New Roman', serif;             /* Pith reading copy */
+  --font-read:    'Crimson Text', Georgia, 'Times New Roman', serif;        /* Pith reading copy */
 
   --tracking-label: 0.14em;
   --measure: 40rem;               /* reading measure for prose */
