@@ -96,7 +96,15 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   font-size: 0.62rem; text-transform: uppercase; letter-spacing: var(--tracking-label);
   color: var(--muted);
 }
-.masthead-lockup { display: block; height: 1.5rem; width: auto; }
+.masthead-lockup { --mark-h: 1.5rem; }
+
+/* Brand lockup: logomark + live "Satsuma" wordmark. Every dimension scales
+   off --mark-h (the logomark height), matching the Figma construction:
+   word 600/550·H, set 95/550·H right of the mark; Crimson Pro 400, -4%. */
+.lockup { display: inline-flex; align-items: center; font-family: var(--font-display); color: var(--deep-ink); line-height: 1; }
+.lockup-mark { height: var(--mark-h); width: auto; display: block; }
+.lockup-word { font-weight: 400; letter-spacing: -0.04em; line-height: 1; font-size: calc(var(--mark-h) * 600 / 550); }
+.lockup--h { gap: calc(var(--mark-h) * 42.5 / 550); }
 
 /* ── Archive ──────────────────────────────────────────────────────────── */
 main.wrap { flex: 1 0 auto; } /* absorbs slack so the footer never floats mid-page */
@@ -173,20 +181,30 @@ main.wrap { flex: 1 0 auto; } /* absorbs slack so the footer never floats mid-pa
   color: var(--muted); letter-spacing: 0.5em; font-size: 0.9rem;
 }
 
-/* ── Colophon / bio box (piece end — Plus Jakarta, upright, boxed) ─────── */
+/* ── Colophon (piece end — editorial sign-off, unboxed) ───────────────── */
 .colophon {
-  max-width: var(--measure); margin: 3.25rem auto 0;
+  max-width: var(--measure); margin: 3.5rem auto 0;
+  padding-top: 1.75rem;
+  border-top: 1px solid var(--rule);
   font-family: var(--font-ui); font-style: normal;
-  background: var(--warm-bark);
-  border-radius: 10px; padding: 1.5rem 1.75rem;
 }
 .colophon p { font-style: normal; margin: 0; }
 .colophon em, .colophon i { font-style: normal; }
-.colophon-bio { font-size: 0.95rem; line-height: 1.6; color: var(--deep-ink); }
+/* Bio reads as a magazine contributor line — italic serif, quiet. */
+.colophon-bio {
+  font-family: var(--font-read); font-style: italic;
+  font-size: 1.15rem; line-height: 1.55; color: var(--muted);
+}
+/* Method note — small sans, muted, under a tracked kicker. */
 .colophon-note {
-  margin-top: 0.85rem !important; padding-top: 0.85rem;
-  border-top: 1px solid #CDC0AB; /* darker shade of the warm-bark box, not the green rule */
-  font-size: 0.82rem; line-height: 1.6; color: var(--deep-ink);
+  margin-top: 1.5rem;
+  font-size: 0.82rem; line-height: 1.7; color: var(--muted);
+}
+.colophon-note::before {
+  content: "On method";
+  display: block; margin-bottom: 0.5rem;
+  font-size: 0.62rem; text-transform: uppercase; letter-spacing: var(--tracking-label);
+  color: var(--satsuma); font-weight: 600;
 }
 
 /* ── Piece nav + back ─────────────────────────────────────────────────── */

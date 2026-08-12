@@ -216,7 +216,10 @@ function layout({ title, description, bodyClass, main, canonical }) {
     </div>
     <a class="masthead-brand" href="https://www.satsumaventures.com" aria-label="Satsuma">
       <span class="masthead-brand-label">A publication of</span>
-      <img class="masthead-lockup" src="/assets/satsuma-lockup.svg" alt="Satsuma" width="132" height="44">
+      <span class="masthead-lockup lockup lockup--h" aria-hidden="true">
+        <img class="lockup-mark" src="/assets/satsuma-logomark.svg" alt="">
+        <span class="lockup-word">Satsuma</span>
+      </span>
     </a>
   </header>
   <main class="wrap">
