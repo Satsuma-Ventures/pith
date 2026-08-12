@@ -1,6 +1,6 @@
 # Pith
 
-Satsuma Ventures' thought-leadership publication — long-form written opinion on AI,
+Satsuma's thought-leadership publication — long-form written opinion on AI,
 empowerment, and building well. Lives at **https://pith.satsumaventures.com**.
 
 Pith is a markdown-first publication: you write pieces as markdown, and a small build

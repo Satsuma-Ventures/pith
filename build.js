@@ -30,7 +30,7 @@ const OUT = path.join(ROOT, 'dist');
 const SITE = {
   name: 'Pith',
   // Fallback meta description only (not shown on the page). Pieces use their own dek.
-  tagline: 'Long-form opinion from Satsuma Ventures.',
+  tagline: 'Long-form opinion from Satsuma.',
   url: 'https://pith.satsumaventures.com',
 };
 
@@ -205,7 +205,7 @@ function layout({ title, description, bodyClass, main, canonical }) {
   <link rel="manifest" href="/assets/favicon/site.webmanifest">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Crimson+Text:ital,wght@0,400;0,600;0,700;1,400&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/assets/site.css">
 </head>
 <body class="${bodyClass || ''}">
@@ -214,9 +214,9 @@ function layout({ title, description, bodyClass, main, canonical }) {
       <a class="masthead-name" href="/">Pith</a>
       <a class="masthead-nav" href="/archive/">Archive</a>
     </div>
-    <a class="masthead-brand" href="https://www.satsumaventures.com" aria-label="Satsuma Ventures">
+    <a class="masthead-brand" href="https://www.satsumaventures.com" aria-label="Satsuma">
       <span class="masthead-brand-label">A publication of</span>
-      <img class="masthead-lockup" src="/assets/satsuma-lockup.svg" alt="Satsuma Ventures" width="132" height="44">
+      <img class="masthead-lockup" src="/assets/satsuma-lockup.svg" alt="Satsuma" width="132" height="44">
     </a>
   </header>
   <main class="wrap">
@@ -225,7 +225,7 @@ ${main}
   <div class="tree-bg" aria-hidden="true"></div>
   <footer class="site-foot">
     <div class="wrap">
-      <span>Pith — <a href="https://www.satsumaventures.com">Satsuma Ventures</a></span>
+      <span>Pith — <a href="https://www.satsumaventures.com">Satsuma</a></span>
       <span class="site-foot-note">Dictated, then shaped.</span>
     </div>
   </footer>

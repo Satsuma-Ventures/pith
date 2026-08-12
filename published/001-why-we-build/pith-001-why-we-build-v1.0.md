@@ -1,6 +1,6 @@
 # Pith-001 | Why We Build v1.0
 
-*Matt Erstling · Satsuma Ventures · July 2026*
+*Matt Erstling · Satsuma · July 2026*
 
 ---
 
@@ -64,6 +64,6 @@ That's why we build.
 
 ---
 
-*Matt Erstling is the founder of Satsuma Ventures, a private family venture studio based in Seattle.*
+*Matt Erstling is the founder of Satsuma, a private family venture studio based in Seattle.*
 
 *Dictated, then shaped. Every Pith piece starts as a conversation — we talk, an AI asks follow-up questions and organizes what comes out, and we edit what comes back. The thinking is ours. The typing isn't. We'd rather tell you that than pretend otherwise — and if you think that undermines the argument, that's worth sitting with, because it's the same argument.*

@@ -27,7 +27,7 @@ every `transcript-*.md` is ignored. For each published folder, the build serves 
 4. **A byline line** immediately after the H1, italicised:
 
    ```
-   *Matt Erstling · Satsuma Ventures · July 2026*
+   *Matt Erstling · Satsuma · July 2026*
    ```
 
 5. **Section breaks** use a horizontal rule (`---`) between movements; the build renders
@@ -53,7 +53,7 @@ tail is *not* all-italic, the build assumes it's a normal section and the `---` 
 
 ---
 
-*Matt Erstling is the founder of Satsuma Ventures, a private family venture studio based in Seattle.*
+*Matt Erstling is the founder of Satsuma, a private family venture studio based in Seattle.*
 
 *Dictated, then shaped. Every Pith piece starts as a conversation …*
 ```
