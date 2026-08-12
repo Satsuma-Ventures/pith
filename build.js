@@ -347,17 +347,26 @@ function splitColophon(md) {
   return { essay: lines.slice(0, idx).join('\n').trim(), colophon: paras };
 }
 
-/** Render the colophon paragraphs into a boxed bio section (upright, no italics). */
+/** Render the colophon: an italic-serif author line, then the "On method" note
+ *  in its own subtly-tinted block. */
 function colophonBox(paras) {
   if (!paras || !paras.length) return '';
-  const items = paras.map((p, i) => {
-    const inner = marked.parseInline(p.replace(/^\*|\*$/g, '').trim());
-    const cls = i === 0 ? 'colophon-bio' : 'colophon-note';
-    return `        <p class="${cls}">${inner}</p>`;
-  }).join('\n');
+  const strip = (p) => marked.parseInline(p.replace(/^\*|\*$/g, '').trim());
+  const [bio, ...notes] = paras;
+  const bioHtml = `        <p class="colophon-bio">${strip(bio)}</p>`;
+  let methodHtml = '';
+  if (notes.length) {
+    const noteItems = notes
+      .map((p) => `          <p class="colophon-note">${strip(p)}</p>`)
+      .join('\n');
+    methodHtml = `
+        <div class="colophon-method">
+${noteItems}
+        </div>`;
+  }
   return `
       <aside class="colophon">
-${items}
+${bioHtml}${methodHtml}
       </aside>`;
 }
 

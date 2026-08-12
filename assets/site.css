@@ -190,22 +190,27 @@ main.wrap { flex: 1 0 auto; } /* absorbs slack so the footer never floats mid-pa
 }
 .colophon p { font-style: normal; margin: 0; }
 .colophon em, .colophon i { font-style: normal; }
-/* Bio reads as a magazine contributor line — italic serif, quiet. */
-.colophon-bio {
+/* Bio reads as a closing line of the piece — prose serif, italic. */
+.colophon .colophon-bio {
   font-family: var(--font-read); font-style: italic;
-  font-size: 1.15rem; line-height: 1.55; color: var(--muted);
+  font-size: 1.38rem; line-height: 1.5; color: var(--deep-ink);
 }
-/* Method note — small sans, muted, under a tracked kicker. */
-.colophon-note {
-  margin-top: 1.5rem;
-  font-size: 0.82rem; line-height: 1.7; color: var(--muted);
+/* Method block — subtly tinted so it lifts off the linen page. */
+.colophon-method {
+  margin-top: 3.5rem;
+  background: rgba(232, 222, 208, 0.5); /* warm-bark, translucent */
+  border-radius: 8px; padding: 1.25rem 1.5rem;
 }
-.colophon-note::before {
+.colophon-method::before {
   content: "On method";
   display: block; margin-bottom: 0.5rem;
   font-size: 0.62rem; text-transform: uppercase; letter-spacing: var(--tracking-label);
   color: var(--satsuma); font-weight: 600;
 }
+.colophon-note {
+  font-size: 0.82rem; line-height: 1.7; color: var(--deep-ink);
+}
+.colophon-note + .colophon-note { margin-top: 0.75rem; }
 
 /* ── Piece nav + back ─────────────────────────────────────────────────── */
 .piece-nav {
