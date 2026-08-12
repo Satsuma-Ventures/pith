@@ -146,7 +146,7 @@ main.wrap { flex: 1 0 auto; } /* absorbs slack so the footer never floats mid-pa
 .prose p { margin: 0 auto 1.5rem; }
 .prose p:first-of-type::first-letter {
   font-family: var(--font-display); font-weight: 700;
-  font-size: 5.4rem; line-height: 0.68; float: left;
+  font-size: 5.4rem; line-height: 0.6; float: left;
   padding: 0.32rem 0.5rem 0 0; color: var(--grove);
 }
 .prose a { color: var(--grove); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; }
