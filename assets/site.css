@@ -168,7 +168,7 @@ main.wrap { flex: 1 0 auto; } /* absorbs slack so the footer never floats mid-pa
 .piece-title {
   font-family: var(--font-display); font-weight: 700;
   font-size: clamp(2.25rem, 5.5vw, 3.4rem); line-height: 1.06; letter-spacing: -0.015em;
-  max-width: 9.6em; margin: 0 auto; /* ~24ch in Crimson Pro; em is font-stable, no wrap jump on swap */
+  max-width: 13.57em; margin: 0 auto; /* 24ch at Crimson Pro's 0-advance (0.565em); em is font-stable, no wrap jump on swap */
 }
 .piece-byline {
   margin-top: 1.25rem; font-size: 0.8rem; text-transform: uppercase;
