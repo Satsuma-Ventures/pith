@@ -254,7 +254,7 @@ function archivePage(pieces) {
 ${items || empty}
     </ol>`;
   return layout({
-    title: 'Archive — Pith',
+    title: 'Archive — Pith — A Publication of Satsuma',
     description: 'Every Pith piece, newest first.',
     bodyClass: 'archive', main,
     canonical: `${SITE.url}/archive/`,
@@ -288,7 +288,7 @@ ${nav}
     <p class="piece-back"><a href="/archive/">← The archive</a></p>`;
   // The latest piece is served at both "/" and "/<slug>/"; canonical always points to the slug.
   return layout({
-    title: atRoot ? `Pith — ${p.title}` : `${p.title} — Pith-${p.num}`,
+    title: atRoot ? `Pith — ${p.title}` : `${p.title} (${p.num}) — Pith — A Publication of Satsuma`,
     description: p.dek || SITE.tagline,
     bodyClass: 'piece-page', main,
     canonical: `${SITE.url}${p.url}`,
