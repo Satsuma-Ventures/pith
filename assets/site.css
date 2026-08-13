@@ -84,7 +84,7 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   width: min(46vw, 560px);
   aspect-ratio: 1600 / 1534;
   background: var(--grove);
-  opacity: 0.09;
+  opacity: 0.045;
   -webkit-mask: url(/assets/satsuma-tree-outline.svg) no-repeat right bottom / contain;
           mask: url(/assets/satsuma-tree-outline.svg) no-repeat right bottom / contain;
 }
