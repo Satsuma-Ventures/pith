@@ -190,7 +190,7 @@ function layout({ title, description, bodyClass, main, canonical }) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)}</title>
+  <title>${escapeHtml(title)} — A Publication of Satsuma</title>
   <meta name="description" content="${desc}">
   <meta property="og:site_name" content="Pith">
   <meta property="og:title" content="${escapeHtml(title)}">
