@@ -1,6 +1,6 @@
 # Pith-001 | Why We Build v1.0
 
-*Matt Erstling · Satsuma · July 2026*
+*Matt Erstling · Satsuma · August 3, 2026*
 
 ---
 
