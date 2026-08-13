@@ -288,7 +288,7 @@ ${nav}
     <p class="piece-back"><a href="/archive/">← The archive</a></p>`;
   // The latest piece is served at both "/" and "/<slug>/"; canonical always points to the slug.
   return layout({
-    title: atRoot ? `Pith — ${p.title}` : `${p.title} (${p.num}) — Pith: A Publication of Satsuma`,
+    title: atRoot ? `${p.title} — Pitch: A Publication of Satsuma` : `${p.title} (${p.num}) — Pith: A Publication of Satsuma`,
     description: p.dek || SITE.tagline,
     bodyClass: 'piece-page', main,
     canonical: `${SITE.url}${p.url}`,
