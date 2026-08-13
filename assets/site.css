@@ -2,6 +2,32 @@
    Pith — Satsuma thought-leadership publication
    Tokens mirror studio/design-system/colors_and_type.css
    ───────────────────────────────────────────────────────────────────────── */
+
+/* ── Metric-matched fallback faces ─────────────────────────────────────────
+   Times New Roman / Arial re-scaled to occupy the same box as the web fonts,
+   so the swap when Google Fonts finish loading causes no layout shift. The
+   real families still load via the <link> in each page's <head> (display=swap);
+   these only hold the space until then. Overrides computed with
+   @capsizecss/core from the actual font metrics — do not hand-tune. ───────── */
+@font-face {
+  font-family: 'Crimson Pro Fallback';
+  src: local('Times New Roman'), local('TimesNewRomanPSMT');
+  font-display: swap;
+  size-adjust: 98.5577%;
+  ascent-override: 90.9604%;
+  descent-override: 21.7988%;
+  line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Plus Jakarta Sans Fallback';
+  src: local('Arial'), local('ArialMT');
+  font-display: swap;
+  size-adjust: 104.9796%;
+  ascent-override: 98.8763%;
+  descent-override: 21.147%;
+  line-gap-override: 0%;
+}
+
 :root {
   --grove:      #2E5428;
   --grove-700:  #1E371A;
@@ -13,9 +39,9 @@
   --rule:       #D8DDD0;
   --muted:      #5A6B52;
 
-  --font-display: 'Crimson Pro', Georgia, 'Times New Roman', serif;   /* nameplate + titles */
-  --font-ui:      'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; /* labels, nav, bio */
-  --font-read:    'Crimson Pro', Georgia, 'Times New Roman', serif;        /* Pith reading copy */
+  --font-display: 'Crimson Pro', 'Crimson Pro Fallback', Georgia, 'Times New Roman', serif;   /* nameplate + titles */
+  --font-ui:      'Plus Jakarta Sans', 'Plus Jakarta Sans Fallback', -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif; /* labels, nav, bio */
+  --font-read:    'Crimson Pro', 'Crimson Pro Fallback', Georgia, 'Times New Roman', serif;        /* Pith reading copy */
 
   --tracking-label: 0.14em;
   --measure: 40rem;               /* reading measure for prose */
