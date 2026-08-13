@@ -190,7 +190,7 @@ function layout({ title, description, bodyClass, main, canonical }) {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${escapeHtml(title)} — A Publication of Satsuma</title>
+  <title>${escapeHtml(title)}</title>
   <meta name="description" content="${desc}">
   <meta property="og:site_name" content="Pith">
   <meta property="og:title" content="${escapeHtml(title)}">
@@ -288,7 +288,7 @@ ${nav}
     <p class="piece-back"><a href="/archive/">← The archive</a></p>`;
   // The latest piece is served at both "/" and "/<slug>/"; canonical always points to the slug.
   return layout({
-    title: atRoot ? `Pith — ${p.title}` : `${p.title} — Pith-${p.num}`,
+    title: atRoot ? `Pith — ${p.title}` : `${p.title} (${p.num}) — Pith: A Publication of Satsuma`,
     description: p.dek || SITE.tagline,
     bodyClass: 'piece-page', main,
     canonical: `${SITE.url}${p.url}`,
