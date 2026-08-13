@@ -87,6 +87,15 @@ a:hover { text-decoration: underline; text-underline-offset: 3px; }
   opacity: 0.045;
   -webkit-mask: url(/assets/satsuma-tree-outline.svg) no-repeat right bottom / contain;
           mask: url(/assets/satsuma-tree-outline.svg) no-repeat right bottom / contain;
+  /* Fade in on load — mirrors the studio hero tree (600ms, same easing). */
+  animation: tree-fade-in 600ms var(--ease-out) both;
+}
+@keyframes tree-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 0.045; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .tree-bg::before { animation: none; }
 }
 @media (max-width: 40rem) { .tree-bg::before { width: 62vw; } }
 
